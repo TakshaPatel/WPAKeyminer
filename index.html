@@ -1,0 +1,581 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button tap</title>
+</head>
+<style>
+    body {
+        padding-left: 500px;
+        padding-right: 500px;
+        padding-bottom: 500px;
+        padding-top: 500px;
+    }
+
+    .Wow {
+        background-color: black;
+        color: white;
+        border-radius: 39px;
+        padding: 50px;
+    }
+    .Wow:hover {
+    transform: scale(1.2);
+    color: cyan;
+    }
+    .bal1 {
+        background-color: black;
+    }
+    .bal2 {
+        background-color: red;
+    }
+    .bal3 {
+        background-color: orange;
+    }
+    .bal4 {
+        background-color: yellow;
+    }
+    .bal5 {
+        background-color: green;
+    }
+    .bal6 {
+        background-color: blue;
+    }
+    .bal7 {
+        background-color: purple;
+    }
+    .bal8 {
+        background-color: white;
+    }
+</style>
+<script>
+    
+    let thing = 0;
+    function taped() {
+        thing = thing + 1;
+        if (thing > 8) {
+            thing = 1;
+        }
+        let classthing = "bal" + thing;
+        console.log(classthing)
+        document.getElementById("ting").className= classthing;
+    }
+</script>
+<body id="ting">
+    <button id="tap" class="Wow" onclick="taped()">Tap Me!</button>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDLE NODE - Policy Password Tool</title>
+<style>
+:root {
+    --bg: #1c1c1c;
+    --panel-bg: #2a2a2a;
+    --accent: #00fffb;
+    --text: #e0e0e0;
+    --error: #ff4444;
+    --success: #44ff44;
+    --warning: #ffaa00;
+    --radius: 10px;
+    --mono: 'Source Code Pro', monospace;
+}
+
+body {
+    margin: 0;
+    font-family: var(--mono);
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.top-bar {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 10px 15px;
+    text-align: right;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    z-index: 100;
+}
+
+.top-bar h1 {
+    margin: 0 0 5px 0;
+    font-size: 1.4rem;
+    color: var(--accent);
+}
+
+.top-bar i {
+    color: #aaa;
+}
+
+.panel {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px 25px;
+    width: 90%;
+    max-width: 900px;
+    margin: 80px 0 20px 0;
+    line-height: 1.5;
+    box-shadow: inset 0 0 5px #000;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid var(--accent);
+    padding: 8px;
+    text-align: left;
+    font-family: var(--mono);
+}
+
+th {
+    background-color: #222;
+}
+
+button {
+    background-color: #222;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 8px 18px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-weight: bold;
+    transition: all 0.2s;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: var(--accent);
+    color: #000;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.instructions {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 15px 20px;
+    width: 300px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
+#log {
+    width: 90%;
+    max-width: 900px;
+    background-color: #222;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 15px;
+    font-family: var(--mono);
+    white-space: pre-line;
+    margin: 20px 0;
+    min-height: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.log-error {
+    color: var(--error);
+}
+
+.log-success {
+    color: var(--success);
+}
+
+.log-warning {
+    color: var(--warning);
+}
+
+.log-info {
+    color: var(--accent);
+}
+
+.clear-btn {
+    margin-left: 0;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .panel, #log {
+        padding: 15px;
+    }
+    .instructions {
+        width: 90%;
+        font-size: 0.85rem;
+        bottom: 10px;
+        left: 5%;
+    }
+    .top-bar {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+    <h1>WPA_KEYMINER</h1>
+    <i>Use responsibly. By Taksha</i>
+</div>
+
+<div class="panel">
+    <b>Upload Chrome Net Export Log:</b><br><br>
+    <input type="file" id="export" accept=".json" />
+    <button id="process">Process Log</button>
+    <button id="clearTable" class="clear-btn">Clear Table</button>
+
+    <table id="output-networks">
+        <tr>
+            <th>SSID</th>
+            <th>Credentials</th>
+            <th>Security</th>
+            <th>HiddenSSID</th>
+        </tr>
+    </table>
+</div>
+
+<div id="log" class="panel"></div>
+
+<div class="instructions">
+HOW TO USE:
+1. Open Chrome and go to chrome://net-export
+2. In OPTIONS, enable "Include raw bytes"
+3. Click "Start Logging to Disk"
+4. Visit chrome://policy
+5. Click "Reload policies"
+6. Go back to chrome://net-export and click "Stop Logging"
+7. Upload the resulting JSON file here
+8. The tool will extract WiFi configs and display them in the table
+</div>
+
+<script>
+let fileContent;
+let networksFound = 0;
+
+// Logging functions
+const log = (txt, type = 'info') => {
+    console.log(txt);
+    const logEl = document.getElementById("log");
+    const span = document.createElement('span');
+    span.className = `log-${type}`;
+    span.textContent = txt + "\n";
+    logEl.appendChild(span);
+    logEl.scrollTop = logEl.scrollHeight;
+};
+
+const logError = (txt) => log(`[ERROR] ${txt}`, 'error');
+const logSuccess = (txt) => log(`[SUCCESS] ${txt}`, 'success');
+const logWarning = (txt) => log(`[WARNING] ${txt}`, 'warning');
+const logInfo = (txt) => log(`[INFO] ${txt}`, 'info');
+
+// File selection handler
+document.getElementById("export").addEventListener("change", (e) => {
+    fileContent = e.target.files[0];
+    if (fileContent) {
+        logInfo(`File selected: ${fileContent.name}`);
+    }
+});
+
+// Process button handler
+document.getElementById("process").addEventListener("click", () => {
+    if (!fileContent) {
+        logError("No file selected!");
+        alert("Please select a file first!");
+        return;
+    }
+    
+    // Clear previous results
+    networksFound = 0;
+    logInfo("Starting to process log file...");
+    extractNetworks(fileContent);
+});
+
+// Clear table button
+document.getElementById("clearTable").addEventListener("click", () => {
+    const table = document.getElementById("output-networks");
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+    networksFound = 0;
+    logInfo("Table cleared");
+});
+
+// Base64 detection patterns for "NetworkConfigurations"
+const base64Patterns = [
+    "ya0NvbmZpZ3VyYXRpb2",  // NetworkConfiguration
+    "vcmtDb25maWd1cmF0aW",  // orkConfiguration
+    "rQ29uZmlndXJhdGlvbn",  // kConfiguration
+    "Db25maWd1cmF0aW9ucw"   // Configurations
+];
+
+function extractNetworks(file) {
+    const reader = new FileReader();
+    
+    reader.onerror = () => {
+        logError("Failed to read file");
+    };
+    
+    reader.onload = (e) => {
+        try {
+            const netlog = e.target.result;
+            
+            if (!netlog || netlog.length === 0) {
+                logError("File is empty");
+                return;
+            }
+            
+            logInfo(`File size: ${(netlog.length / 1024).toFixed(2)} KB`);
+            
+            // Split into lines
+            const lines = netlog.split("\n");
+            logInfo(`Total lines: ${lines.length}`);
+            
+            // Find lines containing base64-encoded policy data
+            const policyLines = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                
+                // Check if line contains any of our patterns
+                if (base64Patterns.some(pattern => line.includes(pattern))) {
+                    policyLines.push(line);
+                }
+            }
+            
+            logInfo(`Found ${policyLines.length} potential policy lines`);
+            
+            if (policyLines.length === 0) {
+                logWarning("No policy data found in log file");
+                logWarning("Make sure you:");
+                logWarning("1. Enabled 'Include raw bytes' in net-export");
+                logWarning("2. Visited chrome://policy");
+                logWarning("3. Clicked 'Reload policies'");
+                return;
+            }
+            
+            // Process each policy line
+            policyLines.forEach((line, index) => {
+                try {
+                    processLine(line, index + 1);
+                } catch (err) {
+                    logError(`Error processing line ${index + 1}: ${err.message}`);
+                }
+            });
+            
+            if (networksFound === 0) {
+                logWarning("No WiFi networks extracted from policy data");
+            } else {
+                logSuccess(`Successfully extracted ${networksFound} network(s)`);
+            }
+            
+        } catch (err) {
+            logError(`Failed to process file: ${err.message}`);
+        }
+    };
+    
+    reader.readAsText(file);
+}
+
+function processLine(line, lineNum) {
+    try {
+        // Extract base64 data from the line
+        const bytesStart = line.indexOf('"bytes":"');
+        const bytesEnd = line.indexOf('"},"phase"');
+        
+        if (bytesStart === -1) {
+            logWarning(`Line ${lineNum}: Could not find bytes field`);
+            return;
+        }
+        
+        if (bytesEnd === -1) {
+            logWarning(`Line ${lineNum}: Could not find end of bytes field`);
+            return;
+        }
+        
+        const base64Data = line.substring(bytesStart + 9, bytesEnd);
+        
+        if (!base64Data) {
+            logWarning(`Line ${lineNum}: Empty base64 data`);
+            return;
+        }
+        
+        // Decode base64
+        let decodedData;
+        try {
+            decodedData = atob(base64Data);
+        } catch (err) {
+            logError(`Line ${lineNum}: Invalid base64 data`);
+            return;
+        }
+        
+        // Find NetworkConfigurations in decoded data
+        const configStart = decodedData.indexOf('"NetworkConfigurations":');
+        
+        if (configStart === -1) {
+            logWarning(`Line ${lineNum}: No NetworkConfigurations found in decoded data`);
+            return;
+        }
+        
+        // Extract the NetworkConfigurations array
+        let configData = decodedData.substring(configStart);
+        
+        // Find the end of the array - look for the closing bracket
+        let bracketCount = 0;
+        let arrayStart = configData.indexOf('[');
+        let arrayEnd = -1;
+        
+        if (arrayStart === -1) {
+            logWarning(`Line ${lineNum}: Could not find start of NetworkConfigurations array`);
+            return;
+        }
+        
+        for (let i = arrayStart; i < configData.length; i++) {
+            if (configData[i] === '[') bracketCount++;
+            if (configData[i] === ']') {
+                bracketCount--;
+                if (bracketCount === 0) {
+                    arrayEnd = i + 1;
+                    break;
+                }
+            }
+        }
+        
+        if (arrayEnd === -1) {
+            logWarning(`Line ${lineNum}: Could not find end of NetworkConfigurations array`);
+            return;
+        }
+        
+        // Extract just the array part
+        const jsonStr = configData.substring(configData.indexOf('['), arrayEnd);
+        
+        // Parse JSON safely
+        let configurations;
+        try {
+            configurations = JSON.parse(jsonStr);
+        } catch (err) {
+            logError(`Line ${lineNum}: Failed to parse JSON: ${err.message}`);
+            return;
+        }
+        
+        if (!Array.isArray(configurations)) {
+            logWarning(`Line ${lineNum}: NetworkConfigurations is not an array`);
+            return;
+        }
+        
+        logInfo(`Line ${lineNum}: Found ${configurations.length} configuration(s)`);
+        
+        // Process each network configuration
+        configurations.forEach((config, configIndex) => {
+            try {
+                processNetworkConfig(config, lineNum, configIndex + 1);
+            } catch (err) {
+                logError(`Line ${lineNum}, Config ${configIndex + 1}: ${err.message}`);
+            }
+        });
+        
+    } catch (err) {
+        logError(`Line ${lineNum}: Unexpected error: ${err.message}`);
+    }
+}
+
+function processNetworkConfig(config, lineNum, configNum) {
+    // Check if this is a WiFi configuration
+    if (!config.Type || config.Type !== "WiFi") {
+        return; // Skip non-WiFi configs silently
+    }
+    
+    if (!config.WiFi) {
+        logWarning(`Line ${lineNum}, Config ${configNum}: WiFi config missing WiFi object`);
+        return;
+    }
+    
+    const wifi = config.WiFi;
+    
+    // Extract SSID
+    const ssid = wifi.SSID || "UNKNOWN";
+    
+    // Extract Security
+    const security = wifi.Security || "NONE";
+    
+    // Extract credentials
+    let credentials = "NOT FOUND";
+    
+    if (wifi.Passphrase) {
+        credentials = wifi.Passphrase;
+    } else if (security === "WPA-EAP" && wifi.EAP) {
+        const identity = wifi.EAP.Identity || "N/A";
+        const password = wifi.EAP.Password || "N/A";
+        credentials = `Identity: ${identity}\nPassword: ${password}`;
+    }
+    
+    // Extract HiddenSSID
+    const hiddenSSID = wifi.HiddenSSID !== undefined ? String(wifi.HiddenSSID) : "false";
+    
+    // Add to table
+    addNetworkToTable(ssid, credentials, security, hiddenSSID);
+    
+    networksFound++;
+    logSuccess(`Extracted network: ${ssid}`);
+}
+
+function addNetworkToTable(ssid, credentials, security, hiddenSSID) {
+    const table = document.getElementById("output-networks");
+    const tr = document.createElement("tr");
+    
+    const tdSSID = document.createElement("td");
+    tdSSID.textContent = ssid;
+    
+    const tdCredentials = document.createElement("td");
+    tdCredentials.textContent = credentials;
+    tdCredentials.style.whiteSpace = "pre-line";
+    
+    const tdSecurity = document.createElement("td");
+    tdSecurity.textContent = security;
+    
+    const tdHidden = document.createElement("td");
+    tdHidden.textContent = hiddenSSID;
+    
+    tr.appendChild(tdSSID);
+    tr.appendChild(tdCredentials);
+    tr.appendChild(tdSecurity);
+    tr.appendChild(tdHidden);
+    
+    table.appendChild(tr);
+}
+
+// Initial log message
+logInfo("Ready to process Chrome net-export logs");
+</script>
+<p>H1DDEN//SI//5EYE</p>
+</body>
+</html>
