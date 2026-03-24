@@ -282,7 +282,7 @@ HOW TO USE:
 let fileContent;
 let networksFound = 0;
 
-// Logging functions
+
 const log = (txt, type = 'info') => {
     console.log(txt);
     const logEl = document.getElementById("log");
@@ -298,7 +298,7 @@ const logSuccess = (txt) => log(`[SUCCESS] ${txt}`, 'success');
 const logWarning = (txt) => log(`[WARNING] ${txt}`, 'warning');
 const logInfo = (txt) => log(`[INFO] ${txt}`, 'info');
 
-// File selection handler
+
 document.getElementById("export").addEventListener("change", (e) => {
     fileContent = e.target.files[0];
     if (fileContent) {
@@ -306,7 +306,7 @@ document.getElementById("export").addEventListener("change", (e) => {
     }
 });
 
-// Process button handler
+
 document.getElementById("process").addEventListener("click", () => {
     if (!fileContent) {
         logError("No file selected!");
@@ -314,13 +314,13 @@ document.getElementById("process").addEventListener("click", () => {
         return;
     }
     
-    // Clear previous results
+    
     networksFound = 0;
     logInfo("Starting to process log file...");
     extractNetworks(fileContent);
 });
 
-// Clear table button
+
 document.getElementById("clearTable").addEventListener("click", () => {
     const table = document.getElementById("output-networks");
     while (table.rows.length > 1) {
@@ -330,7 +330,7 @@ document.getElementById("clearTable").addEventListener("click", () => {
     logInfo("Table cleared");
 });
 
-// Base64 detection patterns for "NetworkConfigurations"
+
 const base64Patterns = [
     "ya0NvbmZpZ3VyYXRpb2",  // NetworkConfiguration
     "vcmtDb25maWd1cmF0aW",  // orkConfiguration
@@ -356,17 +356,17 @@ function extractNetworks(file) {
             
             logInfo(`File size: ${(netlog.length / 1024).toFixed(2)} KB`);
             
-            // Split into lines
+            
             const lines = netlog.split("\n");
             logInfo(`Total lines: ${lines.length}`);
             
-            // Find lines containing base64-encoded policy data
+            
             const policyLines = [];
             
             for (let i = 0; i < lines.length; i++) {
                 const line = lines[i];
                 
-                // Check if line contains any of our patterns
+                
                 if (base64Patterns.some(pattern => line.includes(pattern))) {
                     policyLines.push(line);
                 }
@@ -383,7 +383,7 @@ function extractNetworks(file) {
                 return;
             }
             
-            // Process each policy line
+            
             policyLines.forEach((line, index) => {
                 try {
                     processLine(line, index + 1);
@@ -408,7 +408,7 @@ function extractNetworks(file) {
 
 function processLine(line, lineNum) {
     try {
-        // Extract base64 data from the line
+        
         const bytesStart = line.indexOf('"bytes":"');
         const bytesEnd = line.indexOf('"},"phase"');
         
@@ -429,7 +429,7 @@ function processLine(line, lineNum) {
             return;
         }
         
-        // Decode base64
+        
         let decodedData;
         try {
             decodedData = atob(base64Data);
@@ -438,7 +438,7 @@ function processLine(line, lineNum) {
             return;
         }
         
-        // Find NetworkConfigurations in decoded data
+        
         const configStart = decodedData.indexOf('"NetworkConfigurations":');
         
         if (configStart === -1) {
@@ -446,10 +446,10 @@ function processLine(line, lineNum) {
             return;
         }
         
-        // Extract the NetworkConfigurations array
+        
         let configData = decodedData.substring(configStart);
         
-        // Find the end of the array - look for the closing bracket
+        
         let bracketCount = 0;
         let arrayStart = configData.indexOf('[');
         let arrayEnd = -1;
@@ -475,10 +475,10 @@ function processLine(line, lineNum) {
             return;
         }
         
-        // Extract just the array part
+        
         const jsonStr = configData.substring(configData.indexOf('['), arrayEnd);
         
-        // Parse JSON safely
+        
         let configurations;
         try {
             configurations = JSON.parse(jsonStr);
@@ -494,7 +494,7 @@ function processLine(line, lineNum) {
         
         logInfo(`Line ${lineNum}: Found ${configurations.length} configuration(s)`);
         
-        // Process each network configuration
+        
         configurations.forEach((config, configIndex) => {
             try {
                 processNetworkConfig(config, lineNum, configIndex + 1);
@@ -509,7 +509,7 @@ function processLine(line, lineNum) {
 }
 
 function processNetworkConfig(config, lineNum, configNum) {
-    // Check if this is a WiFi configuration
+    
     if (!config.Type || config.Type !== "WiFi") {
         return; // Skip non-WiFi configs silently
     }
@@ -521,13 +521,13 @@ function processNetworkConfig(config, lineNum, configNum) {
     
     const wifi = config.WiFi;
     
-    // Extract SSID
+    
     const ssid = wifi.SSID || "UNKNOWN";
     
-    // Extract Security
+    
     const security = wifi.Security || "NONE";
     
-    // Extract credentials
+    
     let credentials = "NOT FOUND";
     
     if (wifi.Passphrase) {
@@ -538,10 +538,10 @@ function processNetworkConfig(config, lineNum, configNum) {
         credentials = `Identity: ${identity}\nPassword: ${password}`;
     }
     
-    // Extract HiddenSSID
+    
     const hiddenSSID = wifi.HiddenSSID !== undefined ? String(wifi.HiddenSSID) : "false";
     
-    // Add to table
+    
     addNetworkToTable(ssid, credentials, security, hiddenSSID);
     
     networksFound++;
@@ -573,7 +573,7 @@ function addNetworkToTable(ssid, credentials, security, hiddenSSID) {
     table.appendChild(tr);
 }
 
-// Initial log message
+
 logInfo("Ready to process Chrome net-export logs");
 </script>
 <p>H1DDEN//SI//5EYE</p>
